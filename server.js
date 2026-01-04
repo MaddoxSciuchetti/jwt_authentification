@@ -27,7 +27,11 @@ const posts = [
 
 
 app.get("/posts", authentificationToken, (req, res) => {
-    res.json(posts.filter(post => post.username === req.user.name))
+    if(posts.filter(post => post.username !== req.username))
+        res.json({ "message": "you have yet to upload posts"})
+    else {
+        res.json(posts.filter(post => post.username === req.user.name))
+    }
 })
 
 function authentificationToken(req, res, next) {
